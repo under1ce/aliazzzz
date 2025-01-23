@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import BackgroundAnimation from "./BackgroundAnimation"; // Импортируем компонент с анимацией фона
 
 const StartScreen = () => {
   const navigate = useNavigate();
@@ -18,17 +19,18 @@ const StartScreen = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-gradient-to-b from-[#8b1e00] via-[#C02900] to-[#8b1e00] px-4 py-8">
-      {/* Logo Section */}
-      <div className="flex-1 flex flex-col items-center justify-center">
+    <div className="min-h-screen w-full flex flex-col relative"> {/* Сделайте контейнер относительным для фона */}
+      {/* Вставляем компонент с анимацией фона */}
+      <BackgroundAnimation />
+
+      {/* Основной контент */}
+      <div className="flex-1 flex flex-col items-center justify-center z-10"> {/* Добавьте z-index для других элементов */}
         <div className="relative flex justify-center items-center mb-8">
-          {/* Background Ellipse */}
           <img 
             src="StartScreen/EllipseLogo.svg" 
             alt="" 
             className="w-[200px] h-[150px] object-contain"
           />
-          {/* Logo text overlay */}
           <img 
             src="StartScreen/logo.svg" 
             alt="Alias Logo" 
@@ -37,24 +39,24 @@ const StartScreen = () => {
         </div>
       </div>
 
-      {/* Buttons Section */}
-      <div className="flex flex-col gap-4 w-full max-w-xs mx-auto mb-12">
+      {/* Кнопки */}
+      <div className="flex flex-col gap-4 w-full max-w-xs mx-auto mb-12 z-10"> {/* Убедитесь, что кнопки на переднем плане */}
         <button
           onClick={handleNewGame}
-          className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg"
+          className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg" style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}
         >
           НАЧАТЬ ИГРАТЬ
         </button>
         
         <Link to="/rules" className="w-full">
-          <button className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg">
-            ПРАВИЛА
-          </button>
+        <button className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg" style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}>
+  ПРАВИЛА
+</button>
         </Link>
       </div>
 
-      {/* Bears Decoration */}
-      <div className="relative w-full flex justify-between items-end px-4">
+      {/* Декорация с медведями */}
+      <div className="relative w-full flex justify-between items-end px-4 z-10">
         <img 
           src="StartScreen/medved1.svg" 
           alt="" 

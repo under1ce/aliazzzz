@@ -11,7 +11,7 @@ export function updateTeamScores(teams, currentTeamIndex, roundScore) {
   }
   
   // Проверка на победу
-  export function checkForWinner(teams, maxScore = 20) {
+  export function checkForWinner(teams, maxScore = 60) {
     const winner = teams.find(team => team.score >= maxScore) || null;
   
     if (winner) {
@@ -20,4 +20,5 @@ export function updateTeamScores(teams, currentTeamIndex, roundScore) {
   
     return winner;
   }
+  
   

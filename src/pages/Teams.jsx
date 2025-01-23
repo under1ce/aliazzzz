@@ -121,10 +121,12 @@ function Teams() {
         {teams.length < 7 && (
           <div 
             onClick={handleAddTeam}
-            className="flex items-center gap-3 p-3 bg-[#FFD686] rounded-lg mb-2 cursor-pointer"
+            className="flex items-center gap-3 p-3 bg-[#FFD686] rounded-lg mb-2 cursor-pointer" 
+            style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}
+            
           >
             <img 
-              src="Teams/bear3.svg" 
+              src="Teams/add.svg" 
               alt="" 
               className="w-8 h-8"
             />
@@ -138,7 +140,7 @@ function Teams() {
       {/* Bottom Buttons */}
       <div className="mt-auto flex flex-col gap-4">
         <Link to="/start" className="w-full">
-          <button className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg">
+          <button className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg"style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}> 
             ПРОДОЛЖИТЬ
           </button>
         </Link>

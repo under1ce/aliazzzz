@@ -1,69 +1,96 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
+const bearColors = {
+  'bear1.svg': '#90EE90', // зеленый
+  'bear2.svg': '#FFD700', // желтый
+  'bear3.svg': '#FFB6C1', // розовый
+  'bear4.svg': '#87CEEB', // синий
+  'bear5.svg': '#FF6B6B', // красный
+  'bear6.svg': '#FFFFFF', // белый
+  'bear7.svg': '#2F2F2F', // черный
+};
+
 function StartGame() {
   const [teams, setTeams] = useState([]);
   const [currentTeamIndex, setCurrentTeamIndex] = useState(0);
   const location = useLocation();
-  const handleStartGame = () => {
-    localStorage.setItem("currentTeamIndex", currentTeamIndex.toString());
-  };
-  
-  
 
   useEffect(() => {
     const savedTeams = JSON.parse(localStorage.getItem("teams")) || [];
     setTeams(savedTeams);
 
-    // Получаем сохраненный индекс команды
     let newIndex = parseInt(localStorage.getItem("currentTeamIndex") || "0");
-
-    // Если передан nextTeamIndex, используем его
     if (location.state?.nextTeamIndex !== undefined) {
       newIndex = location.state.nextTeamIndex;
     }
-
     setCurrentTeamIndex(newIndex);
   }, [location.state?.nextTeamIndex]);
 
+  const currentTeam = teams[currentTeamIndex];
+  const currentBearColor = currentTeam ? bearColors[currentTeam.icon] : '#FFFFFF';
+
   return (
-    <div className="h-screen flex flex-col items-center bg-gradient-to-b from-[#8b1e00] via-[#C02900] to-[#8b1e00] px-4 relative">
-      <div className="relative w-full flex flex-col items-center mt-6">
-        <img src="Rules/shapka.svg" alt="Alias Logo" className="items-center w-full max-w-md -mt-6" />
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#8b1e00] via-[#C02900] to-[#8b1e00]">
+      {/* Floating circles animation */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full animate-float"
+            style={{
+              backgroundColor: currentBearColor,
+              width: Math.random() * 20 + 10 + 'px',
+              height: Math.random() * 20 + 10 + 'px',
+              left: Math.random() * 100 + '%',
+              top: Math.random() * 50 + '%',
+              opacity: 0.3,
+              animation: `float ${Math.random() * 3 + 2}s infinite ease-in-out`,
+              animationDelay: `${Math.random() * 2}s`,
+            }}
+          />
+        ))}
       </div>
 
-      <div className="relative flex justify-center items-center w-full max-w-md mt-6">
-        <img src="Rules/Ellipse5.svg" alt="Ellipse Background" className="absolute w-full max-w-md h-auto" />
+      {/* Header */}
+      <div className="relative z-10 pt-12 px-6 text-center">
+        <h1 className="text-white text-2xl font-bold mb-2">ХОДИТ:</h1>
+        <p className="text-white text-4xl font-bold">{currentTeam?.name}</p>
+      </div>
 
-        <div className="relative z-10 flex flex-col items-center text-white px-6 py-12 max-w-[85%] text-left">
-          <h1 className="text-3xl font-bold text-center w-full mb-6">
-            {location.state?.nextTeamIndex !== undefined ? 'СЛЕДУЮЩИЙ ХОД' : 'НАЧАЛО ИГРЫ'}
-          </h1>
-
-          {teams.length > 0 && (
-            <div className="flex flex-col items-center gap-3 mb-6">
-              <p className="text-xl">Ходит команда:</p>
-              <div className="flex items-center gap-3">
-                <img 
-                  src={`Teams/${teams[currentTeamIndex]?.icon}`} 
-                  alt={teams[currentTeamIndex]?.name} 
-                  className="w-8 h-8" 
-                />
-                <p className="text-2xl font-semibold">{teams[currentTeamIndex]?.name}</p>
-              </div>
-            </div>
+      {/* Start Button with Bear */}
+      <div className="flex-1 relative flex justify-center items-center">
+        <Link 
+          to="/game" 
+          className="relative flex justify-center items-center w-64 h-64"
+        >
+          
+          <img 
+            src="StartGame/start-btn.svg" 
+            
+            alt="Start" 
+            className="w-full h-full relative z-20"
+          />
+          {currentTeam && (
+            <img
+              src={`Teams/${currentTeam.icon}`}
+              alt={currentTeam.name}
+              className="absolute -top-7 w-20 h-20 z-10"
+            />
           )}
-
-          <Link to="/game">
-            <button
-              className="flex items-center gap-2 bg-[#FFD686] text-[#292D32] py-3 px-12 rounded-full font-semibold shadow-lg hover:bg-[#ffedc8] transition duration-300"
-            >
-              <img src="StartGame/start-btn.svg" alt="Start" className="w-6 h-6" />
-              НАЧАТЬ
-            </button>
-          </Link>
-        </div>
+          
+        </Link>
       </div>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
+        }
+        .animate-float {
+          animation: float 3s infinite ease-in-out;
+        }
+      `}</style>
     </div>
   );
 }

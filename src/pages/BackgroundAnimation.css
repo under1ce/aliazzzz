@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #C02900;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
+  /* waves */
+  .box {
+    position: fixed;
+    top: 0;
+    transform: rotate(80deg);
+    left: 0;
+  }
+  
+  .wave {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: .4;
+    position: absolute;
+    top: 3%;
+    left: 10%;
+    background: #6e1515;
+    width: 1500px;
+    height: 1300px;
+    margin-left: -150px;
+    margin-top: -250px;
+    transform-origin: 50% 48%;
+    border-radius: 43%;
+    animation: drift 7000ms infinite linear;
+  }
+  
+  .wave.-three {
+    animation: drift 7500ms infinite linear;
+    position: fixed;
+    background-color: #C02900;
+  }
+  
+  .wave.-two {
+    animation: drift 3000ms infinite linear;
+    opacity: .1;
+    background: #ffffff;
+    position: fixed;
+  }
+  
+  .box:after {
+    content: '';
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    transform: translate3d(0, 0, 0);
+  }
+  
+  @keyframes drift {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Loading Space */
+  .contain {
+    animation-delay: 4s;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #C02900;
+    background: linear-gradient(#8b1e00, #C02900);
+  }
+  
+  .icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 5px;
+  }
+  
+  .icon:nth-child(2) img {
+    animation-delay: 0.2s;
+  }
+  
+  .icon:nth-child(3) img {
+    animation-delay: 0.3s;
+  }
+  
+  .icon:nth-child(4) img {
+    animation-delay: 0.4s;
+  }
+  
+  .icon img {
+    animation: anim 2s ease infinite;
+    transform: scale(0, 0) rotateZ(180deg);
+  }
+  
+  @keyframes anim {
+    0% {
+      transform: scale(0, 0) rotateZ(-90deg);
+      opacity: 0;
+    }
+    30% {
+      transform: scale(1, 1) rotateZ(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1, 1) rotateZ(0deg);
+      opacity: 1;
+    }
+    80% {
+      transform: scale(0, 0) rotateZ(90deg);
+      opacity: 0;
+    }
+  }
+  
