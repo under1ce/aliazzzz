@@ -60,7 +60,7 @@ const Results = () => {
 
       {/* Results */}
       <motion.div
-        className="relative text-center text-white mt-6 px-4 py-4"
+        className="relative text-center text-white -mt-6 px-4 py-4"
         initial={{ y: 50, opacity: 0 }}
         animate={containerControls}
       >

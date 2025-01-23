@@ -60,13 +60,13 @@ function StartGame() {
 
       {/* Start Button with Bear */}
       <div className="flex-1 relative flex justify-center items-center">
-        <Link to="/game" className="relative flex justify-center items-center w-64 h-64">
+        <Link to="/game" className="relative flex justify-center items-center w-65 h-65">
           <img src="StartGame/start-btn.svg" alt="Start" className="w-full h-full relative z-20" />
           {currentTeam && (
             <img
               src={`Teams/${currentTeam.icon}`}
               alt={currentTeam.name}
-              className="absolute -top-7 w-20 h-20 z-10"
+              className="absolute -top-2 w-20 h-20 z-10"
             />
           )}
         </Link>

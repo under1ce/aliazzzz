@@ -11,7 +11,7 @@ const StartScreen = () => {
     
     const newTeams = [
       { id: "team1", name: "ПИКМИ", score: 0, icon: "bear1.svg" },
-      { id: "team2", name: "УБЕЖИЩА", score: 0, icon: "bear2.svg" },
+      { id: "team2", name: "СИМПЫ", score: 0, icon: "bear2.svg" },
     ];
     
     localStorage.setItem("teams", JSON.stringify(newTeams));
