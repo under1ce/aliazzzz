@@ -117,29 +117,29 @@ const Game = () => {
 
       {/* Game Over */}
       {isGameOver && (
-        <div className="mt-6 flex flex-col items-center">
-          {isLastWord && !swipedLastWord && (
-            <p className="text-white text-2xl font-semibold mb-4">Последнее слово!</p>
-          )}
-        </div>
-      )}
+  <div className="flex flex-col items-center mt-0"> {/* Для текста, пониже */}
+    {isLastWord && !swipedLastWord && (
+      <p className="text-white text-2xl font-semibold mb-4">Последнее слово!</p>
+    )}
+  </div>
+)}
 
-      {/* Buttons */}
-      <div className="mt-8 flex flex-col gap-4">
-        <button
-          onClick={() => handleGuess(true)}
-          className="w-full bg-[#A7D82A] text-[#ffffff] py-3 px-6 rounded-full font-semibold shadow-lg hover:bg-green-400 transition duration-300"
-          style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}
-        >
-          УГАДАНО
-        </button>
-        <button
-          onClick={() => handleGuess(false)}
-          className="flex items-center gap-0 justify-center">
-          <img src="StartGame/back-icon.svg" alt="" className="w-6 h-6" />
-          <span className="text-white text-lg">НАЗАД</span>
-        </button>
-      </div>
+{/* Контейнер для кнопок, с уменьшенным отступом */}
+<div className="mt-11 flex flex-col gap-4"> {/* Изменил mt-8 на mt-6 */}
+  <button
+    onClick={() => handleGuess(true)}
+    className="w-full bg-[#A7D82A] text-[#ffffff] py-3 px-6 rounded-full font-semibold shadow-lg hover:bg-green-400 transition duration-300"
+    style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}
+  >
+    УГАДАНО
+  </button>
+  <button
+    onClick={() => handleGuess(false)}
+    className="flex items-center gap-0 justify-center">
+    <img src="StartGame/back-icon.svg" alt="" className="w-6 h-6" />
+    <span className="text-white text-lg">НАЗАД</span>
+  </button>
+</div>
 
     </div>
   );
