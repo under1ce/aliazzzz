@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion"; // Импортируем framer-motion
 
 const randomTeamNames = [
   "ПАЛИТРА",
@@ -55,9 +56,8 @@ function Teams() {
         score: 0,
       };
 
-      const updatedTeams = [...teams, newTeam];
-      setTeams(updatedTeams);
-      localStorage.setItem("teams", JSON.stringify(updatedTeams));
+      setTeams(prevTeams => [...prevTeams, newTeam]);
+      localStorage.setItem("teams", JSON.stringify([...teams, newTeam]));
     }
   };
 
@@ -86,44 +86,46 @@ function Teams() {
 
       {/* Teams List */}
       <div className="flex-1">
-        {teams.map((team, index) => (
-          <div 
-            key={team.id} 
-            className={`flex items-center gap-3 p-3 rounded-lg mb-2 ${
-              index === teams.length && teams.length < 7 ? 'bg-[#FFD686]' : 'bg-[#8B1E00]'
-            }`}
-          >
-            <img 
-              src={`Teams/${team.icon}`} 
-              alt="" 
-              className="w-8 h-8"
-            />
-            <input
-              type="text"
-              value={team.name}
-              onChange={(e) => handleRenameTeam(team.id, e.target.value)}
-              className={`text-lg bg-transparent border-none focus:outline-none w-full ${
-                index === teams.length && teams.length < 7 ? 'text-[#292D32]' : 'text-white'
-              }`}
-            />
-            {index >= 2 && (
-              <button
-                onClick={() => handleRemoveTeam(team.id, index)}
-                className="text-red-500 ml-auto"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        ))}
+        <AnimatePresence>
+          {teams.map((team, index) => (
+            <motion.div 
+              key={team.id} 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3 }}
+              className={`flex items-center gap-3 p-3 rounded-lg mb-2 bg-[#8B1E00]`}
+            >
+              <img 
+                src={`Teams/${team.icon}`} 
+                alt="" 
+                className="w-8 h-8"
+              />
+              <input
+                type="text"
+                value={team.name}
+                onChange={(e) => handleRenameTeam(team.id, e.target.value)}
+                className="text-lg bg-transparent border-none focus:outline-none w-full text-white"
+              />
+              {index >= 2 && (
+                <button
+                  onClick={() => handleRemoveTeam(team.id, index)}
+                  className="text-red-500 ml-auto"
+                >
+                  ✕
+                </button>
+              )}
+            </motion.div>
+          ))}
+        </AnimatePresence>
 
         {/* Add Team Button */}
         {teams.length < 7 && (
-          <div 
+          <motion.div 
             onClick={handleAddTeam}
+            whileTap={{ scale: 0.9 }}
             className="flex items-center gap-3 p-3 bg-[#FFD686] rounded-lg mb-2 cursor-pointer" 
             style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}
-            
           >
             <img 
               src="Teams/add.svg" 
@@ -133,14 +135,14 @@ function Teams() {
             <span className="text-lg text-[#292D32] font-medium">
               ДОБАВИТЬ
             </span>
-          </div>
+          </motion.div>
         )}
       </div>
 
       {/* Bottom Buttons */}
       <div className="mt-auto flex flex-col gap-4">
         <Link to="/start" className="w-full">
-          <button className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg"style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}> 
+          <button className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg" style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}> 
             ПРОДОЛЖИТЬ
           </button>
         </Link>

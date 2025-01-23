@@ -6,7 +6,7 @@ import { getUpdatedTeams, getNextTeamIndex } from "../gameLogic";
 const Game = () => {
   const [teams, setTeams] = useState([]);
   const [currentTeamIndex, setCurrentTeamIndex] = useState(0);
-  const [secondsLeft, setSecondsLeft] = useState(3);  // Restored to 60 seconds
+  const [secondsLeft, setSecondsLeft] = useState(5);
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [word, setWord] = useState("");
@@ -90,16 +90,17 @@ const Game = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-[#8b1e00] via-[#C02900] to-[#8b1e00] px-4 py-8">
-      {/* Header with Current Team */}
-      <div className="text-center mb-6">
-        <p className="text-white text-xl font-semibold">
+      {/* Header */}
+      <div className="relative flex flex-col items-center mt-6">
+        <img src="Rules/shapka.svg" alt="Alias Logo" className="w-full max-w-md -mt-6" />
+        <p className="text-white text-xl font-semibold absolute top-20">
           Текущая команда: {teams[currentTeamIndex]?.name}
         </p>
       </div>
 
-      {/* Word Container */}
-      <div className="flex-1 flex justify-center items-center w-full max-w-md">
-        <div className="w-64 h-64 flex items-center justify-center rounded-full shadow-lg text-[#292D32] text-3xl font-bold bg-white text-center px-4">
+      {/* Game Area */}
+      <div className="flex-1 relative flex justify-center items-center w-full max-w-md">
+        <div className="w-64 h-64 flex items-center justify-center rounded-full shadow-lg text-[#292D32] text-3xl font-bold bg-white">
           {word}
         </div>
       </div>
@@ -114,32 +115,32 @@ const Game = () => {
         )}
       </div>
 
-      {/* Game Over Message */}
+      {/* Game Over */}
       {isGameOver && (
-        <div className="flex flex-col items-center mt-4">
-          {isLastWord && !swipedLastWord && (
-            <p className="text-white text-2xl font-semibold mb-4">Последнее слово!</p>
-          )}
-        </div>
-      )}
+  <div className="flex flex-col items-center mt-0"> {/* Для текста, пониже */}
+    {isLastWord && !swipedLastWord && (
+      <p className="text-white text-2xl font-semibold mb-4">Последнее слово!</p>
+    )}
+  </div>
+)}
 
-      {/* Action Buttons */}
-      <div className="mt-8 flex flex-col gap-4 w-full max-w-xs">
-        <button
-          onClick={() => handleGuess(true)}
-          className="w-full bg-[#A7D82A] text-[#ffffff] py-3 px-6 rounded-full font-semibold shadow-lg hover:bg-green-400 transition duration-300"
-          style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}
-        >
-          УГАДАНО
-        </button>
-        <button
-          onClick={() => handleGuess(false)}
-          className="flex items-center justify-center gap-2 text-white text-lg"
-        >
-          <img src="StartGame/back-icon.svg" alt="" className="w-6 h-6" />
-          НАЗАД
-        </button>
-      </div>
+{/* Контейнер для кнопок, с уменьшенным отступом */}
+<div className="mt-11 flex flex-col gap-4"> {/* Изменил mt-8 на mt-6 */}
+  <button
+    onClick={() => handleGuess(true)}
+    className="w-full bg-[#A7D82A] text-[#ffffff] py-3 px-6 rounded-full font-semibold shadow-lg hover:bg-green-400 transition duration-300"
+    style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}
+  >
+    УГАДАНО
+  </button>
+  <button
+    onClick={() => handleGuess(false)}
+    className="flex items-center gap-0 justify-center">
+    <img src="StartGame/back-icon.svg" alt="" className="w-6 h-6" />
+    <span className="text-white text-lg">НАЗАД</span>
+  </button>
+</div>
+
     </div>
   );
 };

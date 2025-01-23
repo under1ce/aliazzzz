@@ -59,9 +59,10 @@ const StartScreen = () => {
         <img 
           src="StartScreen/medved3.svg" 
           alt="" 
-          className="w-[380px]"
+          className="w-[320px] top"
         />
       </div>
+      
     </div>
   );
 };
