@@ -25,18 +25,12 @@ const StartScreen = () => {
 
       {/* Основной контент */}
       <div className="flex-1 flex flex-col items-center justify-center z-10"> {/* Добавьте z-index для других элементов */}
-        <div className="relative flex justify-center items-center mb-8">
-          <img 
-            src="StartScreen/EllipseLogo.svg" 
-            alt="" 
-            className="w-[200px] h-[150px] object-contain"
-          />
-          <img 
-            src="StartScreen/logo.svg" 
-            alt="Alias Logo" 
-            className="absolute w-[180px]"
-          />
-        </div>
+      <img 
+  src="StartScreen/logo.svg" 
+  alt="Alias Logo" 
+  className="w-[380px]"
+/>
+
       </div>
 
       {/* Кнопки */}
@@ -58,19 +52,14 @@ const StartScreen = () => {
       {/* Декорация с медведями */}
       <div className="relative w-full flex justify-between items-end px-4 z-10">
         <img 
-          src="StartScreen/medved1.svg" 
-          alt="" 
-          className="w-24 h-24"
-        />
-        <img 
           src="StartScreen/medved2.svg" 
           alt="" 
-          className="w-24 h-24"
+          className="w-[380px]"
         />
         <img 
           src="StartScreen/medved3.svg" 
           alt="" 
-          className="w-24 h-24"
+          className="w-[380px]"
         />
       </div>
     </div>
