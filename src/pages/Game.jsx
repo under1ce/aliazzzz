@@ -137,7 +137,7 @@ const Game = () => {
           className="flex items-center justify-center gap-2 text-white text-lg"
         >
           <img src="StartGame/back-icon.svg" alt="" className="w-6 h-6" />
-          НАЗАД
+          ПРОПУСТИТЬ
         </button>
       </div>
     </div>
