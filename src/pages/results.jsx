@@ -60,7 +60,7 @@ const Results = () => {
 
       {/* Results */}
       <motion.div
-        className="relative text-center text-white -mt-6 px-4 py-4"
+        className="relative text-center text-white -mt-5 px-4 py-4"
         initial={{ y: 50, opacity: 0 }}
         animate={containerControls}
       >
@@ -106,7 +106,7 @@ const Results = () => {
       {/* Next Round Button */}
       <motion.button
         onClick={handleNextRound}
-        className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-[#FFD686] text-[#292D32] py-3 px-13 rounded-full font-semibold shadow-lg hover:bg-[#ffedc8] transition duration-300"
+        className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-[#FFD686] text-[#292D32] py-3 px-12 rounded-full font-semibold shadow-lg hover:bg-[#ffedc8] transition duration-300"
         whileTap={{ scale: 0.95 }}
       >
         Следующий раунд
