@@ -26,7 +26,7 @@ function Rules() {
         </div>
 
         <Link to="/" className="block mt-8">
-          <button className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg" style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.1)' }}> 
+          <button className="w-full bg-[#FFD686] text-[#292D32] py-3 px-8 rounded-full font-semibold text-lg" style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}> 
             
             ПОНЯТНО
           </button>
