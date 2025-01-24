@@ -8,7 +8,7 @@ import skipWordSound from "../sounds/skip-word.mp3";
 const Game = () => {
   const [teams, setTeams] = useState([]);
   const [currentTeamIndex, setCurrentTeamIndex] = useState(0);
-  const [secondsLeft, setSecondsLeft] = useState(5);  // Restored to 60 seconds
+  const [secondsLeft, setSecondsLeft] = useState(60);  // Restored to 60 seconds
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [word, setWord] = useState("");
