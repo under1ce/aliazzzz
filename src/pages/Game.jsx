@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { wordsString } from "../words";
 import { useNavigate } from "react-router-dom";
 import { getUpdatedTeams, getNextTeamIndex } from "../gameLogic";
+import lastWordSound from "../sounds/last-word.mp3";
+import skipWordSound from "../sounds/skip-word.mp3";
 
 const Game = () => {
   const [teams, setTeams] = useState([]);
@@ -13,7 +15,10 @@ const Game = () => {
   const [wordsHistory, setWordsHistory] = useState([]);
   const [isLastWord, setIsLastWord] = useState(false);
   const [swipedLastWord, setSwipedLastWord] = useState(false);
+  const [wordHighlight, setWordHighlight] = useState("");
 
+  const lastWordAudioRef = useRef(null);
+  const skipWordAudioRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +31,12 @@ const Game = () => {
     setScore(0);
     setRandomWord();
   }, []);
+
+  useEffect(() => {
+    if (isLastWord && !swipedLastWord) {
+      lastWordAudioRef.current.play();
+    }
+  }, [isLastWord, swipedLastWord]);
 
   const setRandomWord = () => {
     const words = wordsString.split(",");
@@ -54,9 +65,16 @@ const Game = () => {
         )
       );
       setWordsHistory(prevWords => [...prevWords, { word, isGuessed: true }]);
+      setWordHighlight("bg-green-200");
     } else {
+      skipWordAudioRef.current.play(); // Play skip sound
       setWordsHistory(prevWords => [...prevWords, { word, isGuessed: false }]);
+      setWordHighlight("bg-red-200");
     }
+
+    setTimeout(() => {
+      setWordHighlight("");
+    }, 500);
 
     if (!isLastWord) {
       setRandomWord();
@@ -90,6 +108,10 @@ const Game = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-[#8b1e00] via-[#C02900] to-[#8b1e00] px-4 py-8">
+      {/* Audio elements for sounds */}
+      <audio ref={lastWordAudioRef} src={lastWordSound} />
+      <audio ref={skipWordAudioRef} src={skipWordSound} />
+
       {/* Header with Current Team */}
       <div className="text-center mb-6">
         <p className="text-white text-xl font-semibold">
@@ -97,10 +119,31 @@ const Game = () => {
         </p>
       </div>
 
-      {/* Word Container */}
-      <div className="flex-1 flex justify-center items-center w-full max-w-md">
-        <div className="w-64 h-64 flex items-center justify-center rounded-full shadow-lg text-[#292D32] text-3xl font-bold bg-white text-center px-4">
+      {/* Word Container and Action Buttons */}
+      <div className="flex-1 flex flex-col justify-center items-center w-full max-w-md space-y-4">
+        {/* Word Container */}
+        <div 
+          className={`w-64 h-64 flex items-center justify-center rounded-full shadow-lg text-[#292D32] text-3xl font-bold bg-white text-center px-4 transition-colors duration-300 ${wordHighlight}`}
+        >
           {word}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col gap-4 w-full max-w-xs">
+          <button
+            onClick={() => handleGuess(true)}
+            className="w-full bg-[#A7D82A] text-[#ffffff] py-3 px-6 rounded-full font-semibold shadow-lg hover:bg-green-400 transition duration-300"
+            style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}
+          >
+            УГАДАНО
+          </button>
+          <button
+            onClick={() => handleGuess(false)}
+            className="flex items-center justify-center gap-2 text-white text-lg"
+          >
+            <img src="StartGame/back-icon.svg" alt="" className="w-6 h-6" />
+            ПРОПУСТИТЬ
+          </button>
         </div>
       </div>
 
@@ -122,24 +165,6 @@ const Game = () => {
           )}
         </div>
       )}
-
-      {/* Action Buttons */}
-      <div className="mt-8 flex flex-col gap-4 w-full max-w-xs">
-        <button
-          onClick={() => handleGuess(true)}
-          className="w-full bg-[#A7D82A] text-[#ffffff] py-3 px-6 rounded-full font-semibold shadow-lg hover:bg-green-400 transition duration-300"
-          style={{ boxShadow: '2px 5px 0px rgba(0, 0, 0, 0.2)' }}
-        >
-          УГАДАНО
-        </button>
-        <button
-          onClick={() => handleGuess(false)}
-          className="flex items-center justify-center gap-2 text-white text-lg"
-        >
-          <img src="StartGame/back-icon.svg" alt="" className="w-6 h-6" />
-          ПРОПУСТИТЬ
-        </button>
-      </div>
     </div>
   );
 };

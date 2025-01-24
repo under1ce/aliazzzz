@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import victorySound from "../sounds/victory.mp3"; // Add this sound file to your project
 
 const Winner = () => {
+  const audioRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -10,6 +12,13 @@ const Winner = () => {
   const winningTeam = teams.find(team => team.name === winnerName);
   const teamIndex = winningTeam ? teams.indexOf(winningTeam) + 1 : 1;
   const bearIcon = `/Teams/bear${teamIndex}.svg`;
+
+  useEffect(() => {
+    // Play victory sound when component mounts
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  }, []);
 
   const handlePlayAgain = () => {
     localStorage.removeItem("teams");
@@ -27,9 +36,8 @@ const Winner = () => {
 
   return (
     <div className="h-screen flex flex-col items-center justify-between bg-[#C02900] px-4 py-8">
-      <div className="w-full flex justify-start pl-4 pt-2">
-        <span className="text-white">9:41</span>
-      </div>
+      {/* Audio element for victory sound */}
+      <audio ref={audioRef} src={victorySound} />
 
       <div className="flex flex-col items-center justify-center flex-grow">
         <div className="text-center mb-4">
@@ -52,8 +60,12 @@ const Winner = () => {
             ИГРАТЬ ЗАНОВО
           </button>
 
-          <button onClick={handleExit} className="w-full bg-transparent border-2 border-white text-white py-3 px-6 rounded-full font-semibold hover:bg-white/10 transition duration-300">
-            ВЫЙТИ
+          <button
+            onClick={handleExit}
+            className="flex items-center justify-center gap-2 text-white text-lg"
+          >
+            <img src="StartGame/back-icon.svg" alt="" className="w-6 h-6" />
+            МЕНЮ
           </button>
         </div>
       </div>

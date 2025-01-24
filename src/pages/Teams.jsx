@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion"; // Импортируем framer-motion
+import { motion, AnimatePresence } from "framer-motion";
+import addTeamSound from "../sounds/add-team.mp3";
+import removeTeamSound from "../sounds/remove-team.mp3";
 
 const randomTeamNames = [
   "ПАЛИТРА",
@@ -20,6 +22,8 @@ const defaultTeams = [
 
 function Teams() {
   const [teams, setTeams] = useState([]);
+  const addTeamAudioRef = useRef(null);
+  const removeTeamAudioRef = useRef(null);
 
   useEffect(() => {
     const savedTeams = JSON.parse(localStorage.getItem("teams"));
@@ -58,6 +62,11 @@ function Teams() {
 
       setTeams(prevTeams => [...prevTeams, newTeam]);
       localStorage.setItem("teams", JSON.stringify([...teams, newTeam]));
+      
+      // Play add team sound
+      if (addTeamAudioRef.current) {
+        addTeamAudioRef.current.play();
+      }
     }
   };
 
@@ -66,6 +75,11 @@ function Teams() {
     const updatedTeams = teams.filter(team => team.id !== id);
     setTeams(updatedTeams);
     localStorage.setItem("teams", JSON.stringify(updatedTeams));
+    
+    // Play remove team sound
+    if (removeTeamAudioRef.current) {
+      removeTeamAudioRef.current.play();
+    }
   };
 
   const handleRenameTeam = (id, newName) => {
@@ -78,6 +92,10 @@ function Teams() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#8b1e00] via-[#C02900] to-[#8b1e00] px-4 py-8">
+      {/* Audio elements for sounds */}
+      <audio ref={addTeamAudioRef} src={addTeamSound} />
+      <audio ref={removeTeamAudioRef} src={removeTeamSound} />
+
       {/* Header with Teams title */}
       <div className="flex items-center gap-2 mb-6">
         <img src="Teams/komandy.svg" alt="" className="w-6 h-6" />
